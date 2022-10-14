@@ -17,8 +17,15 @@ def get_product(request, product_id):
       },
       }
     return render(request, "product_detail.html", context)
-   #  return HttpResponse(f'''
-   #  <p>Name: {product.name}</p>
-   #  <p>Price: {product.price}</p>
-   #  <p>Description: {product.description}</p>
-   #  ''')
+
+def get_products(request):
+   products = Product.objects.all()
+   product_list = []
+   for product in products:
+      product_list.append({
+            "name": product.name,
+            "price": f"{product.price} KD",
+            "description": product.description
+            })
+   context = {"products": product_list}
+   return render(request, "product-list.html", context)
